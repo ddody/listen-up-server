@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const problemSchema = new Schema({
+  title: {
+    type: String,
+    required: true
+  },
   link: {
     type: String,
     required: true
@@ -14,21 +18,14 @@ const problemSchema = new Schema({
     type: Number,
     required: true
   },
-  user: [Schema.Types.ObjectId],
+  user: Schema.Types.ObjectId,
   lyrics: {
     type: String,
     required: true
-  }
+  },
+  wrongAnswer: [Schema.Types.ObjectId]
 });
 
-const Problem = mongoose.model('User', problemSchema);
-
-Problem.Schema.path('link').validate(function (value) {
-
-});
-
-Problem.Schema.path('lyrics').validate(function (value) {
-
-});
+const Problem = mongoose.model('Problem', problemSchema);
 
 module.exports = Problem;

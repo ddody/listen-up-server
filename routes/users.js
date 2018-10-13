@@ -28,7 +28,7 @@ router.post('/login', function (req, res, next) {
             } else {
               res.status(201).json({
                 message: "created token",
-                token: "Bearer " + token
+                token
               });
             }
           }
@@ -37,13 +37,12 @@ router.post('/login', function (req, res, next) {
         const { uid, name } = req.body;
         const newUser = new User({
           uid,
-          name,
-          point: 0
+          name
         });
 
         newUser.save((err, user) => {
           if (err) {
-            next(new ERRORS.serverError());
+            next(new ERRORS.ServerError());
           } else {
             const token = jwt.sign(
               { uid },
@@ -55,7 +54,7 @@ router.post('/login', function (req, res, next) {
                 } else {
                   res.status(201).json({
                     message: "new user created",
-                    token: "Bearer " + token
+                    token
                   });
                 }
               }
@@ -69,21 +68,6 @@ router.post('/login', function (req, res, next) {
     });
 });
 
-router.post('/logout', function (req, res) {
-  res.send('logout');
-});
-
-router.post('/auth', function(){}, function (req, res) {
-  const token = req.headers['Authorization'];
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(decoded);
-    }
-  });
-
-  res.send('logout');
-});
+// users/:user_id/points
 
 module.exports = router;
