@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "SET NODE_ENV=development DB_PASSWORD=admin5678 && nodemon ./bin/www",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "async": "^2.6.1",
