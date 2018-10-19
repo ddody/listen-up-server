@@ -9,7 +9,7 @@ const asyncMap = require('async/map');
 
 router.post('/', authTokenCheck, function (req, res, next) {
   const { uid, link, startTime, endTime, lyrics, title } = req.body;
-  User.findOne({ uid: req.body.uid })
+  User.findOne({ uid })
     .then((result) => {
       const newProblem = new Problem({
         title,
@@ -35,8 +35,7 @@ router.post('/', authTokenCheck, function (req, res, next) {
     });
 });
 
-// /problems/challenge ????
-router.get('/random', function (req, res, next) {
+router.get('/random', authTokenCheck, function (req, res, next) {
   Problem.count({}, function (err, count) {
     if (err) {
       next(new ERRORS.ServerError());
@@ -76,6 +75,18 @@ router.get('/random', function (req, res, next) {
         });
     }
   });
+});
+
+router.get('/:id', function (req, res, next) {
+  Problem.findById(req.params.id)
+    .then((result) => {
+      res.status(200).json({
+        result
+      })
+    })
+    .catch((err) => {
+      next(new ERRORS.ServerError());
+    });
 });
 
 module.exports = router;

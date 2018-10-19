@@ -8,6 +8,7 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const problemsRouter = require('./routes/problems');
+const answerRouter = require('./routes/answers');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/problems', problemsRouter);
+app.use('/answers', answerRouter);
 
 app.use(function (err, req, res, next) {
   res.status(err.status).json({

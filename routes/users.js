@@ -4,8 +4,8 @@ const User = require('../models/Users');
 const ERRORS = require('../lib/errors');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'listeupsecret';
+const authTokenCheck = require('../middleware/authTokenCheck');
 
-/* GET users listing. */
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
@@ -68,6 +68,39 @@ router.post('/login', function (req, res, next) {
     });
 });
 
-// users/:user_id/points
+router.post('/:user_id/points', authTokenCheck, function (req, res, next) {
+  const point = Number(req.body.point);
+  const uid = req.body.uid;
+  if (typeof point === 'number') {
+    User.findOne({ uid })
+      .then((result) => {
+        result.point = result.point + point;
+        result.save((err, user) => {
+          if (err) {
+            next(new ERRORS.ServerError());
+          } else {
+            res.status(201).json({
+              message: "Point add success",
+            });
+          }
+        });
+      });
+  } else {
+    next(new ERRORS.PointError());
+  }
+});
+
+router.get('/points', authTokenCheck, function (req, res, next) {
+  User.find({point: {$gt: 0}}).sort('-point')
+    .then((result) => {
+      res.status(200).json({
+        message: "Get ranking success",
+        result
+      });
+    })
+    .catch((err) => {
+      next(new ERRORS.ServerError());
+    });
+});
 
 module.exports = router;
