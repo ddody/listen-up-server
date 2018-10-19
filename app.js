@@ -53,6 +53,14 @@ app.use('/users', usersRouter);
 app.use('/problems', problemsRouter);
 app.use('/answers', answerRouter);
 
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV !== 'local' && (!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
+    res.redirect('https://' + req.get('Host') + req.url);
+  } else {
+    next();
+  }
+});
+
 app.use(function (err, req, res, next) {
   res.status(err.status ? err.status : 500).json({
     message: err.message
