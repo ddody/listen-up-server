@@ -24,7 +24,8 @@ db.once('open', function () {
 
 const whitelist = [
   'https://listenup.kr',
-  'https://www.listenup.kr'
+  'https://www.listenup.kr',
+  'https://dev.listenup.kr'
 ];
 
 const corsOptions = {
