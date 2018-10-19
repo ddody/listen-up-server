@@ -42,7 +42,7 @@ router.get('/random', authTokenCheck, function (req, res, next) {
     } else {
 
       let randomArr = [];
-      const PROBLEM_NUMBER = 0;
+      const PROBLEM_NUMBER = 2;
 
       const randomNum = () => {
         let random = Math.floor(Math.random() * (count));
