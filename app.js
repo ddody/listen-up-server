@@ -30,6 +30,7 @@ const whitelist = [
 
 const corsOptions = {
   origin: function (origin, callback) {
+    console.log(origin);
     if (process.env.NODE_ENV === 'development') {
       callback(null, true);
     } else if (process.env.NODE_ENV === 'production') {
