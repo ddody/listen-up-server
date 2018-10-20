@@ -15,7 +15,9 @@ const DB_URL = process.env.NODE_ENV !== 'production' ?
 `mongodb://admin:${process.env.DB_PASSWORD}@ds143211.mlab.com:43211/listen-up-development` :
 `mongodb://admin:${process.env.DB_PASSWORD}@ds057224.mlab.com:57224/listen-up`;
 
-mongoose.connect(DB_URL);
+mongoose.connect(DB_URL,
+  { useNewUrlParser: true }
+);
 
 const db = mongoose.connection;
 db.once('open', function () {
@@ -30,7 +32,6 @@ const whitelist = [
 
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log(origin);
     if (process.env.NODE_ENV === 'development') {
       callback(null, true);
     } else if (process.env.NODE_ENV === 'production') {
@@ -49,11 +50,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/problems', problemsRouter);
-app.use('/answers', answerRouter);
-
 app.use((req, res, next) => {
   if (process.env.NODE_ENV !== 'local' && (!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
     res.redirect('https://' + req.get('Host') + req.url);
@@ -61,6 +57,11 @@ app.use((req, res, next) => {
     next();
   }
 });
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/problems', problemsRouter);
+app.use('/answers', answerRouter);
 
 app.use(function (err, req, res, next) {
   res.status(err.status ? err.status : 500).json({
