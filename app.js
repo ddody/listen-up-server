@@ -55,7 +55,7 @@ app.use('/problems', problemsRouter);
 app.use('/answers', answerRouter);
 
 app.use((req, res, next) => {
-  if (process.env.NODE_ENV !== 'local' && (!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
+  if (process.env.NODE_ENV === 'production' && (!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
     res.redirect('https://' + req.get('Host') + req.url);
   } else {
     next();
