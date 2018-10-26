@@ -12,8 +12,8 @@ const answerRouter = require('./routes/answers');
 const app = express();
 
 const DB_URL = process.env.NODE_ENV !== 'production' ?
-`mongodb://admin:${process.env.DB_PASSWORD}@ds143211.mlab.com:43211/listen-up-development` :
-`mongodb://admin:${process.env.DB_PASSWORD}@ds057224.mlab.com:57224/listen-up`;
+  `mongodb://admin:${process.env.DB_PASSWORD}@ds143211.mlab.com:43211/listen-up-development` :
+  `mongodb://admin:${process.env.DB_PASSWORD}@ds057224.mlab.com:57224/listen-up`;
 
 mongoose.connect(DB_URL,
   { useNewUrlParser: true }
