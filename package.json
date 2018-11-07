@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "SET NODE_ENV=development DB_PASSWORD=admin5678 && nodemon ./bin/www",
+    "dev": "SET NODE_ENV=local&&nodemon ./bin/www",
     "start": "node ./bin/www",
     "test": "mocha test"
   },
@@ -13,6 +13,7 @@
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
+    "dotenv": "^6.1.0",
     "express": "~4.16.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.2",

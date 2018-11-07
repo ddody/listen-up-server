@@ -8,6 +8,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const problemsRouter = require('./routes/problems');
 const answerRouter = require('./routes/answers');
+require('dotenv').config();
 
 const app = express();
 
@@ -29,12 +30,12 @@ const whitelist = [
   'https://www.listenup.kr',
   'https://dev.listenup.kr',
   'https://api.listenup.kr',
-  'https://api-dev.listenup.kr'
+  'https://api-dev.listenup.kr',
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'local') {
       callback(null, true);
     } else if (process.env.NODE_ENV === 'production') {
       if (whitelist.indexOf(origin) !== -1) {
